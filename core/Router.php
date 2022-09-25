@@ -37,10 +37,10 @@ class Router {
 
     public function setRoute(string $route, array $params = []): void {
         $route = preg_replace('/\//', '\\/', $route);
-        var_dump($route);echo'<br>';
         $route = preg_replace('/\{([a-z]+)\}/', '(?P<\1>[a-z-]+)', $route);
         $route = preg_replace('/\{([a-z]+):([^\}]+)\}/', '(?P<\1>\2)', $route);
         $route = '/^' . $route . '$/i';
+        var_dump($route . '<br>');
         $this->routes[$route] = $params;
     }
 
@@ -110,7 +110,7 @@ class Router {
     public function setTable(): Router {
         $this->setRoute('', ['controller' => 'Home', 'action' => 'index']);
         $this->setRoute('posts', ['controller' => 'Posts', 'action' => 'index']);
-        $this->setRoute('{controller}/{action}');
+        $this->setRoute('{controller}/{action}', ['controller' => 'ok', 'action' => 123]);
         $this->setRoute('admin/{controller}/{action}');
         $this->setRoute('{controller}/{id:\d+}/{action}');
         return $this;
